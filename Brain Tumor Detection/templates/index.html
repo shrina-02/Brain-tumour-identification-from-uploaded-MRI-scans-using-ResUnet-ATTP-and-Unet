@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brain Tumor Detection</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #f4f4f4; }
+        h1 { color: #333; }
+        img { width: 400px; margin: 10px; border: 2px solid #444; border-radius: 10px; }
+        .btn { padding: 10px 20px; margin: 5px; background: #007BFF; color: white; border: none; border-radius: 8px; cursor: pointer; }
+        .btn:hover { background: #0056b3; }
+        .result-text { font-size: 20px; font-weight: bold; color: #d9534f; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Brain Tumor Detection</h1>
+
+    <!-- Upload Form -->
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file">
+        <button class="btn" type="submit">Upload</button>
+    </form>
+
+    {% if uploaded_file %}
+        <h2>Uploaded MRI Image</h2>
+        <img src="{{ url_for('static', filename='results/' + uploaded_file) }}">
+    {% endif %}
+
+    
+
+    <!-- Prediction -->
+    {% if uploaded_file %}
+    <form method="POST">
+        <button class="btn" name="predict">Click Here To Predict</button>
+    </form>
+    {% endif %}
+
+    {% if prediction_text %}
+        <p class="result-text">{{ prediction_text }}</p>
+    {% endif %}
+
+    <!-- Step 2 -->
+    {% if uploaded_file %}
+    <form method="POST">
+        <button class="btn" name="step2">Step 1: Noise Cleared Image</button>
+    </form>
+    {% endif %}
+
+    {% if step2_file %}
+        <h2>Step 1 Result (Noise Cleared)</h2>
+        <img src="{{ url_for('static', filename='results/' + step2_file) }}">
+    {% endif %}
+
+    <!-- Step 0 -->
+    {% if uploaded_file %}
+    <form method="POST">
+        <button class="btn" name="step0">Step 2: Final Segmentation</button>
+    </form>
+    {% endif %}
+
+    {% if step0_file %}
+        <h2>Step 2 Result</h2>
+        <img src="{{ url_for('static', filename='results/' + step0_file) }}">
+    {% endif %}
+
+</body>
+</html>
